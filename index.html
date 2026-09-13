@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samantha Sibanda | Software Engineer</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #2a3a50;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6; 
+            --accent-hover: #2563eb;
+            --green: #10b981;
+            --nav-bg: rgba(15, 23, 42, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+
+        /* --- NAVIGATION BAR --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+        }
+        .nav-logo { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+        .nav-links a { color: var(--text-main); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- HERO SECTION --- */
+        .hero { min-height: 100vh; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 4rem; text-align: left; padding: 8rem 2rem 4rem 2rem; background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%); flex-wrap: wrap; }
+        .hero-content { max-width: 600px; }
+        .badge { display: inline-block; background-color: rgba(16, 185, 129, 0.1); color: var(--green); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 0.5rem; font-weight: 800; line-height: 1.1; }
+        .hero h2 { font-size: 1.8rem; color: var(--accent); margin-bottom: 1.5rem; font-weight: 600; }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; }
+        
+        .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .btn-primary { background-color: var(--accent); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+        .btn-primary:hover { background-color: var(--accent-hover); }
+        .btn-secondary { background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .btn-secondary:hover { background: var(--accent); color: white; }
+
+        .profile-img-container { width: 320px; height: 320px; border-radius: 50%; overflow: hidden; border: 4px solid var(--accent); box-shadow: 0 0 40px rgba(59, 130, 246, 0.4); flex-shrink: 0; }
+        .profile-img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .stats-row { display: flex; gap: 3rem; margin-top: 2rem; flex-wrap: wrap; }
+        .stat-item h3 { font-size: 1.5rem; color: var(--text-main); }
+        .stat-item p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- SECTIONS --- */
+        .section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 4rem; }
+        .section-title h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .section-title p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* --- PROJECTS GRID --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; }
+        .project-card { background: var(--bg-card); border-radius: 16px; overflow: hidden; border: 1px solid #334155; transition: all 0.4s ease; display: flex; flex-direction: column; }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); border-color: var(--accent); background: var(--bg-card-hover); }
+        
+        .project-gallery { width: 100%; height: 240px; background-color: #0f172a; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+        .project-gallery img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; scroll-snap-align: center; transition: transform 0.5s ease; }
+        .project-card:hover .project-gallery img { transform: scale(1.05); }
+
+        .project-info { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-info h3 { font-size: 1.4rem; margin-bottom: 0.8rem; }
+        .project-info p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; }
+        
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
+        .tech-tag { background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        
+        .project-links { display: flex; gap: 1rem; margin-top: auto; }
+        .project-links a { font-size: 0.85rem; color: var(--text-main); text-decoration: none; border: 1px solid #475569; padding: 8px 16px; border-radius: 6px; transition: all 0.3s; font-weight: 500; }
+        .project-links a:hover { background: var(--accent); border-color: var(--accent); color: white; }
+
+        /* --- EDUCATION & CERTIFICATIONS --- */
+        .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .edu-card { background: var(--bg-card); padding: 2rem; border-radius: 16px; border: 1px solid #334155; display: flex; gap: 1.5rem; align-items: flex-start; transition: all 0.3s; }
+        .edu-card:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+        .edu-icon { font-size: 2.5rem; }
+        .edu-info h3 { font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .edu-info h4 { font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; }
+        .edu-info p { font-size: 0.9rem; color: var(--text-muted); }
+        .cert-link { display: inline-block; margin-top: 10px; color: var(--green); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+        .cert-link:hover { text-decoration: underline; }
+
+        /* --- SKILLS SECTION --- */
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .skill-category { background: var(--bg-card); padding: 2rem; border-radius: 16px; border: 1px solid #334155; transition: all 0.3s; }
+        .skill-category:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+        .skill-category h3 { font-size: 1.2rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid #334155; padding-bottom: 0.5rem; }
+        .skill-list { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        .skill-item { background: rgba(255, 255, 255, 0.05); color: var(--text-main); padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; border: 1px solid #334155; transition: all 0.3s; }
+        .skill-item:hover { background: var(--accent); border-color: var(--accent); color: white; transform: translateY(-2px); }
+
+        /* --- CONTACT SECTION --- */
+        .contact-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 1.5rem; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        
+        .contact-card { 
+            background: var(--bg-dark); 
+            padding: 2rem; 
+            border-radius: 12px; 
+            border: 1px solid #334155; 
+            text-align: center; 
+            text-decoration: none; 
+            color: var(--text-main); 
+            transition: all 0.3s ease; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 0.5rem;
+        }
+        
+        .contact-card:hover { 
+            transform: translateY(-5px); 
+            border-color: var(--accent); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+        }
+        
+        .contact-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .contact-card h3 { font-size: 1.1rem; color: var(--accent); margin-bottom: 0.3rem; }
+        .contact-card p { font-size: 0.9rem; color: var(--text-muted); word-break: break-word; }
+
+        footer { text-align: center; padding: 1.5rem; background: #0b1120; color: #475569; font-size: 0.85rem; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .hero { flex-direction: column-reverse; text-align: center; gap: 2rem; padding-top: 6rem; }
+            .hero-content { align-items: center; display: flex; flex-direction: column; }
+            .stats-row { justify-content: center; gap: 1.5rem; }
+            .edu-grid { grid-template-columns: 1fr; }
+            nav { flex-direction: column; gap: 1rem; padding: 1rem; }
+            .nav-links a { margin: 0 1rem; }
+            .cta-buttons { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-logo">Samantha Sibanda</div>
+        <div class="nav-links">
+            <a href="#projects">Projects</a>
+            <a href="#education">Qualifications</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🟢 Available for Opportunities</div>
+            <h1>Hi, I'm Samantha Sibanda</h1>
+            <h2>Software Engineer & Full Stack Developer</h2>
+            <p>
+                A passionate BSc Computer Science & IT graduate and BCom Honours in Information Systems & Technology holder from the University of KwaZulu-Natal. 
+                Experienced in building AI-powered business solutions, full-stack web applications, and RESTful APIs.
+            </p>
+            
+            <div class="cta-buttons">
+                <!-- This button now scrolls smoothly down to the contact section -->
+                <a href="#contact" class="btn-primary">Get In Touch</a>
+                <a href="https://linkedin.com/in/samantha-sibanda-a22631216" target="_blank" class="btn-secondary">Connect on LinkedIn</a>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-item"><h3>4+</h3><p>Major Projects</p></div>
+                <div class="stat-item"><h3>2x</h3><p>Certified</p></div>
+                <div class="stat-item"><h3>1+</h3><p>Years Industry Exp.</p></div>
+            </div>
+        </div>
+        
+        <div class="profile-img-container">
+            <img src="profile.jpg" alt="Samantha Sibanda">
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="section" id="projects">
+        <div class="section-title">
+            <h2>Recent Projects</h2>
+            <p>A showcase of my latest work in web development, software engineering, and system design.</p>
+        </div>
+
+        <div class="projects-grid">
+            
+            <!-- Project 1: Expense Tracker -->
+            <div class="project-card">
+                <div class="project-gallery">
+                    <img src="expense-tracker/1.png" alt="Expense Tracker Dashboard">
+                    <img src="expense-tracker/2.png" alt="Add Transaction">
+                    <img src="expense-tracker/3.png" alt="Charts">
+                    <img src="expense-tracker/4.png" alt="Login">
+                </div>
+                <div class="project-info">
+                    <h3>Expense Tracker Android Application</h3>
+                    <p>Developed an Android Expense Tracker application as part of a mobile development project. Features real-time cloud data storage and interactive graphs to visualize spending habits.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Android</span>
+                        <span class="tech-tag">Cloud Firestore</span>
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">MPAndroidChart</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/SamSibs" target="_blank">View Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Howard Clinic Web App -->
+            <div class="project-card">
+                <div class="project-gallery">
+                    <img src="clinic-web/1.png" alt="Clinic Web Home">
+                    <img src="clinic-web/2.png" alt="Clinic Web Login">
+                </div>
+                <div class="project-info">
+                    <h3>Howard Clinic Management System (Web)</h3>
+                    <p>Developed a clinic management system designed to streamline operations. Integrated appointment scheduling, staff management, inventory tracking and report generation.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">ASP.NET</span>
+                        <span class="tech-tag">SQL Server</span>
+                        <span class="tech-tag">Power BI</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/SamSibs" target="_blank">View Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Howard Clinic Desktop App -->
+            <div class="project-card">
+                <div class="project-gallery">
+                    <img src="clinic-desktop/1.png" alt="Desktop Login">
+                    <img src="clinic-desktop/2.png" alt="Manager Dashboard">
+                    <img src="clinic-desktop/3.png" alt="Add Staff">
+                    <img src="clinic-desktop/4.png" alt="Email Messages">
+                </div>
+                <div class="project-info">
+                    <h3>Howard Clinic Management (Desktop)</h3>
+                    <p>Responsive, user-friendly desktop application built to handle clinic administration. Features secure login, staff registration, and an internal messaging system.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">WinForms</span>
+                        <span class="tech-tag">SQL Server</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/SamSibs" target="_blank">View Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Learning Quiz Game -->
+            <div class="project-card">
+                <div class="project-gallery">
+                    <img src="quiz-game/1.png" alt="Quiz Main Menu">
+                    <img src="quiz-game/2.png" alt="Quiz Question">
+                    <img src="quiz-game/3.png" alt="Quiz Results">
+                </div>
+                <div class="project-info">
+                    <h3>Learning Quiz Game</h3>
+                    <p>A learning quiz game designed for tertiary students studying Computer Systems. Includes a dynamic question bank, progress tracking, and immediate feedback.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Visual Studio</span>
+                        <span class="tech-tag">OOP</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/SamSibs" target="_blank">View Code</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- EDUCATION & CERTIFICATIONS SECTION -->
+    <section class="section" id="education" style="background-color: #111827; border-radius: 20px; margin-bottom: 4rem; padding: 4rem 2rem;">
+        <div class="section-title">
+            <h2>Qualifications & Certifications</h2>
+            <p>My academic background and professional credentials.</p>
+        </div>
+
+        <div class="edu-grid">
+            <div class="edu-card">
+                <div class="edu-icon">🎓</div>
+                <div class="edu-info">
+                    <h3>BCom Honours in Information Systems & Technology</h3>
+                    <h4>University of KwaZulu-Natal</h4>
+                    <p>Major Modules: Software Engineering | Mobile App Development | Big Data Management & Analytics. (Completed)</p>
+                </div>
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-icon">🎓</div>
+                <div class="edu-info">
+                    <h3>BSc in Computer Science and Information Technology</h3>
+                    <h4>University of KwaZulu-Natal</h4>
+                    <p>Major Modules: Advanced Programming | Advanced Systems Design | Computer Systems. (Completed)</p>
+                </div>
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-icon">📜</div>
+                <div class="edu-info">
+                    <h3>AWS Certified Cloud Practitioner</h3>
+                    <h4>Amazon Web Services</h4>
+                    <p>Foundational understanding of AWS Cloud concepts, services, security, architecture, and pricing.</p>
+                    <a href="https://www.credly.com/badges/c6d5s2ba-abcb-4707-b8a9-bd38653f4a08/linked_in_profile" target="_blank" class="cert-link">View Credential &rarr;</a>
+                </div>
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-icon">📜</div>
+                <div class="edu-info">
+                    <h3>PCAP - Certified Associate in Python Programming</h3>
+                    <h4>Python Institute</h4>
+                    <p>Demonstrates proficiency in Python programming, including OOP, modules, and exception handling.</p>
+                    <a href="https://www.credly.com/badges/8sa1d96f-04d9-4f2b-ac56-becd5f2187ff/public_url" target="_blank" class="cert-link">View Credential &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNICAL SKILLS SECTION -->
+    <section class="section" id="skills">
+        <div class="section-title">
+            <h2>Technical Skills</h2>
+            <p>A comprehensive overview of my technical expertise and tools.</p>
+        </div>
+
+        <div class="skills-container">
+            <!-- Languages -->
+            <div class="skill-category">
+                <h3>Languages</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">Java</span>
+                    <span class="skill-item">C++</span>
+                    <span class="skill-item">C#</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">HTML</span>
+                    <span class="skill-item">CSS</span>
+                </div>
+            </div>
+
+            <!-- Frameworks & Development -->
+            <div class="skill-category">
+                <h3>Frameworks & Development</h3>
+                <div class="skill-list">
+                    <span class="skill-item">ASP.NET</span>
+                    <span class="skill-item">Full-Stack Web Development</span>
+                    <span class="skill-item">Frontend App Development</span>
+                    <span class="skill-item">Backend App Development</span>
+                </div>
+            </div>
+
+            <!-- Databases -->
+            <div class="skill-category">
+                <h3>Databases</h3>
+                <div class="skill-list">
+                    <span class="skill-item">MySQL</span>
+                    <span class="skill-item">SQL Server</span>
+                    <span class="skill-item">SQL Querying</span>
+                    <span class="skill-item">Relational Database Concepts</span>
+                    <span class="skill-item">Tables & Relationships</span>
+                    <span class="skill-item">App/Database Interaction</span>
+                    <span class="skill-item">HeidiSQL</span>
+                </div>
+            </div>
+
+            <!-- Development Practices -->
+            <div class="skill-category">
+                <h3>Development Practices</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Git</span>
+                    <span class="skill-item">GitHub</span>
+                    <span class="skill-item">Branches & Commits</span>
+                    <span class="skill-item">Pull/Push Workflows</span>
+                    <span class="skill-item">Collaborative Development</span>
+                    <span class="skill-item">Code Review/Feedback</span>
+                    <span class="skill-item">Incremental Feature Development</span>
+                </div>
+            </div>
+
+            <!-- Testing & Debugging -->
+            <div class="skill-category">
+                <h3>Testing & Debugging</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Functional Testing</span>
+                    <span class="skill-item">Feature Validation</span>
+                    <span class="skill-item">Regression Checking</span>
+                    <span class="skill-item">Bug Identification</span>
+                    <span class="skill-item">Debugging</span>
+                    <span class="skill-item">Validation After Changes</span>
+                </div>
+            </div>
+
+            <!-- Cloud & DevOps -->
+            <div class="skill-category">
+                <h3>Cloud & DevOps</h3>
+                <div class="skill-list">
+                    <span class="skill-item">AWS Fundamentals</span>
+                    <span class="skill-item">Docker / Containerisation</span>
+                    <span class="skill-item">Cloud Deployment Concepts</span>
+                </div>
+            </div>
+
+            <!-- Data & AI -->
+            <div class="skill-category">
+                <h3>Data & AI</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Data Management</span>
+                    <span class="skill-item">Big Data Concepts</span>
+                    <span class="skill-item">Power BI</span>
+                    <span class="skill-item">Machine Learning Foundations</span>
+                    <span class="skill-item">Generative AI</span>
+                    <span class="skill-item">Gemini</span>
+                    <span class="skill-item">Vertex AI</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="section" id="contact" style="background-color: var(--bg-card); border-radius: 20px; padding: 4rem 2rem; margin-bottom: 4rem;">
+        <div class="section-title">
+            <h2>Let's Build Something Amazing Together</h2>
+            <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+        </div>
+
+        <div class="contact-grid">
+            <a href="mailto:sibandasamantha63@gmail.com" class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email Me</h3>
+                <p>sibandasamantha63@gmail.com</p>
+            </a>
+            <a href="https://linkedin.com/in/samantha-sibanda-a22631216" target="_blank" class="contact-card">
+                <div class="contact-icon">💼</div>
+                <h3>LinkedIn</h3>
+                <p>Connect with me professionally</p>
+            </a>
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Location</h3>
+                <p>Johannesburg, Gauteng, South Africa</p>
+            </div>
+            <a href="tel:0799151229" class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3>Phone</h3>
+                <p>079 915 1229</p>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Samantha Sibanda. Built with HTML & CSS.</p>
+    </footer>
+
+</body>
+</html>
